@@ -5,6 +5,7 @@ import appVue from './components/App.vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { createPinia } from "pinia";
+import '@fortawesome/fontawesome-free/css/all.css';
 
 const app = createApp(appVue);
 
