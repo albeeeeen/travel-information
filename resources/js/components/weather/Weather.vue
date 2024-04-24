@@ -1,110 +1,91 @@
 <template>
-  <div class="container">
-    <!-- Main container -->
-    <div class="row">
-      <!-- Left container for current weather -->
-      <div class="col-md-6">
-        <div class="current-weather">
-            <div class="weather-header">
-                <div class="location-info">
-                    <h1>{{ locationName }}</h1>
-                    <div class="temperature">{{ temperature }}</div>
-                </div>
-                <i class="fa-solid fa-cloud-sun fa-4x"></i>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="weather-details">
-                        <!-- First column of weather details -->
-                        <div v-for="(detail, index) in weatherDetails.slice(0, Math.ceil(weatherDetails.length / 2))" :key="index" class="weather-detail">
-                            <div class="detail-text">
-                                <h6>
-                                    <i :class="detail.icon"></i>
-                                    {{ detail.name }}
-                                </h6>
-                                <h5 class="detail-value">{{ detail.value }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="weather-details">
-                        <!-- Second column of weather details -->
-                        <div v-for="(detail, index) in weatherDetails.slice(Math.ceil(weatherDetails.length / 2))" :key="index" class="weather-detail">
-                            <div class="detail-text">
-                                <h6>
-                                    <i :class="detail.icon"></i>
-                                    {{ detail.name }}
-                                </h6>
-                                <h5 class="detail-value">{{ detail.value }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+  <!-- Main container -->
+  <div class="row">
+    <!-- Left container for current weather -->
+    <div class="col-md-6">
+      <div class="current-weather">
+          <div class="weather-header">
+              <div class="location-info">
+                  <h1>{{ useWeather.locationName }}</h1>
+                  <div class="temperature">{{ useWeather.temperature }}</div>
+              </div>
+              <img class="weather-icon" :src="this.useWeather.weatherIconUrl + '/' + this.useWeather.weatherIcon + '.png'"></img>
+          </div>
+          <div class="row">
+              <div class="col-6">
+                  <div class="weather-details">
+                      <!-- First column of weather details -->
+                      <div v-for="(detail, index) in this.useWeather.weatherDetails.slice(0, Math.ceil(this.useWeather.weatherDetails.length / 2))" :key="index" class="weather-detail">
+                          <div class="detail-text">
+                              <h6>
+                                  <i :class="detail.icon"></i>
+                                  {{ detail.name }}
+                              </h6>
+                              <h5 class="detail-value">{{ detail.value }}</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-6">
+                  <div class="weather-details">
+                      <!-- Second column of weather details -->
+                      <div v-for="(detail, index) in this.useWeather.weatherDetails.slice(Math.ceil(this.useWeather.weatherDetails.length / 2))" :key="index" class="weather-detail">
+                          <div class="detail-text">
+                              <h6>
+                                  <i :class="detail.icon"></i>
+                                  {{ detail.name }}
+                              </h6>
+                              <h5 class="detail-value">{{ detail.value }}</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-      <!-- Right container for forecast -->
-      <div class="col-md-6">
-        <div class="forecast">
-          <!-- Today's forecast -->
-          <div class="today-forecast">
-            <TodaysForecast :forecastTimes="forecastTimes" :forecasts="todayForecast" />
-          </div>
-          <!-- 7-day forecast -->
-          <div class="seven-day-forecast">
-            <SevenDayForecast :forecastDays="forecastDays" :forecasts="sevenDayForecast" />
-          </div>
+    </div>
+    <!-- Right container for forecast -->
+    <div class="col-md-6">
+      <div class="forecast">
+        <!-- 5-day forecast -->
+        <div class="five-day-forecast">
+          <FiveDayForecast :forecasts="this.useWeather.fiveDayForecast" :timezone="this.useWeather.fiveDayForecastTimezone" />
         </div>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import TodaysForecast from './TodaysForecast.vue';
-import SevenDayForecast from './SevenDayForecast.vue';
+import FiveDayForecast from './FiveDayForecast.vue';
+import {useWeatherStore} from "../../stores/WeatherStore";
 
 export default {
   name: 'WeatherInfo',
   components: {
     TodaysForecast,
-    SevenDayForecast
+    FiveDayForecast
   },
   data() {
     return {
-      locationName: 'Tokyo',
-      temperature: '25°C',
-      currentWeather: 'Sunny',
-      weatherIcon: 'path/to/sunny-icon.png',
-      weatherDetails: [
-        { name: 'UV Index', icon: 'fa-solid fa-sun', value: 'High' },
-        { name: 'Wind Speed', icon: 'fa-solid fa-wind', value: '10 km/h' },
-        { name: 'Humidity', icon: 'fa-solid fa-cloud-sun', value: '50%' },
-        { name: 'Visibility', icon: 'fa-solid fa-eye', value: '10 km' },
-        { name: 'Feels Like', icon: 'fa-solid fa-temperature-high', value: '28°C' },
-        { name: 'Chance of Rain', icon: 'fa-solid fa-cloud-rain', value: '20%' },
-        { name: 'Pressure', icon: 'fa-solid fa-gauge', value: '1013 hPa' },
-        { name: 'Sunset', icon: 'fa-solid fa-cloud-sun', value: '6:30 PM' }
-      ],
-      forecastTimes: ['Morning', 'Noon', 'Midday', 'Evening'],
-      todayForecast: {
-        Morning: { temperature: '20°C', icon: 'fa-solid fa-cloud-sun fa-xl', condition: 'Sunny' },
-        Noon: { temperature: '25°C', icon: 'fa-solid fa-sun fa-xl', condition: 'Partly Cloudy' },
-        Midday: { temperature: '28°C', icon: 'fa-solid fa-cloud fa-xl', condition: 'Cloudy' },
-        Evening: { temperature: '22°C', icon: 'fa-solid fa-moon fa-xl', condition: 'Rainy' }
-      },
-      forecastDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      sevenDayForecast: {
-        Monday: { temperature: '25°C', icon: 'fa-solid fa-cloud-sun', condition: 'Sunny' },
-        Tuesday: { temperature: '23°C', icon: 'fa-solid fa-smog', condition: 'Partly Cloudy' },
-        Wednesday: { temperature: '22°C', icon: 'fa-solid fa-cloud', condition: 'Cloudy' },
-        Thursday: { temperature: '24°C', icon: 'fa-solid fa-cloud-showers-heavy', condition: 'Rainy' },
-        Friday: { temperature: '26°C', icon: 'fa-solid fa-cloud-sun', condition: 'Sunny' },
-        Saturday: { temperature: '28°C', icon: 'fa-solid fa-smog', condition: 'Partly Cloudy' },
-        Sunday: { temperature: '27°C', icon: 'fa-solid fa-cloud', condition: 'Cloudy' }
-      }
+      useWeather: useWeatherStore()
     };
+  },
+  watch: {
+    'useWeather.currentLocation'() {
+      this.handleChangeLocation();
+    }
+  },
+  methods: {
+    async handleChangeLocation() {
+      await this.useWeather.fetchCurrentWeather();
+      await this.useWeather.fetch5DayForecast();
+    }
+  },
+  mounted() {
+    this.handleChangeLocation();
   }
 }
 </script>
@@ -119,6 +100,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 10px 0 0 20px;
+  border-radius: .5rem;
+  background: #cfe3ff;
 }
 
 .location-info {
@@ -135,6 +119,12 @@ export default {
   font-weight: bold;
 }
 
+.weather-icon {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
 .weather-details {
   margin-top: 20px;
 }
@@ -143,7 +133,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  background: #f2f2f2;
+  background: #cfe3ff;
   border-radius: 5px;
 }
 
@@ -153,10 +143,6 @@ export default {
 
 .detail-value {
   padding-left: 30px;
-}
-
-.forecast {
-  margin-top: 20px;
 }
 
 .forecast h3 {
@@ -173,6 +159,15 @@ export default {
   .weather-info {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .weather-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  .temperature {
+    font-size: 3rem;
+    font-weight: bold;
   }
 }
 </style>

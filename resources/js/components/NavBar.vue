@@ -1,6 +1,6 @@
 <!-- Navbar.vue -->
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg" style="background: #f5f5dc">
     <div class="container">
       <a class="navbar-brand" href="#">Travel Information</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,10 +28,13 @@
 </template>
 
 <script>
+import {useWeatherStore} from "../stores/WeatherStore";
+
 export default {
     data() {
         return {
             selected: '/',
+            useWeather: useWeatherStore(),
             weatherList: [
                 {
                     label: 'Tokyo',
@@ -69,6 +72,7 @@ export default {
         $route: {
             handler: function (routeValue) {
                 this.selected = (routeValue.query.loc !== null || routeValue.query.loc !== undefined) ? routeValue.query.loc : '';
+                this.useWeather.currentLocation = this.selected;
             }
         }
     }

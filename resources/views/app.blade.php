@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Japan Travel Information</title>
 
+        @vite('resources/css/app.css')
     </head>
 
     <body>
