@@ -23,6 +23,7 @@ class ApiConstants
     public const RESULTS = 'results';
     public const ERROR = 'error';
     public const MESSAGE = 'message';
+    public const AUTH = 'Authorization';
     
 
     //weather API
@@ -30,4 +31,16 @@ class ApiConstants
     public const APP_ID = 'appid';
     public const COUNT = 'cnt';
     public const UNITS = 'units';
+
+    //places API
+    public const NEAR = 'near';
+    public const TEXT = 'text';
+    public const FORMAT = 'format';
+    public const API_KEY = 'apiKey';
+    public const JSON = 'json';
+    public const DEFAULT_CC = ',JP';
+    public const LIMIT = 'limit';
+    public const FILTER = 'filter';
+    public const PLACE = 'place';
+    public const ID = 'id';
 }

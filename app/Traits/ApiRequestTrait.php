@@ -38,12 +38,14 @@ trait ApiRequestTrait
      * @param string $method
      * @param string $uri
      * @param array $request
+     * @param array $headers
      * @return Response
      */
-    protected function httpRequest(string $method, string $uri, array $request = []): Response
+    protected function httpRequest(string $method, string $uri, array $request = [], array $headers = []): Response
     {
         $method = strtolower($method);
-        return Http::{$method}($this->baseUri . $uri, $request);
+        return Http::withHeaders($headers)
+            ->{$method}($this->baseUri . $uri, $request);
     }
 
     /**

@@ -19,11 +19,13 @@ class BaseApiUtils
      * @param string  $method
      * @param string  $uri
      * @param mixed[] $request
+     * @param mixed[] $headers
      */
-    protected function request(string $method, string $uri, array $request = []): array
+    protected function request(string $method, string $uri, array $request = [], array $headers = []): array
     {
-        $response = $this->httpRequest($method, $uri, $request);
-        $this->logApiRequest(ApiConstants::THIRD_PARTY_API, $method, $uri, $request, $response);
+        $response = $this->httpRequest($method, $uri, $request, $headers);
+        $this->logApiRequest(ApiConstants::THIRD_PARTY_API, 
+            $method, $uri, $request, $response);
 
         return $this->formatApiResponse($response);
     }

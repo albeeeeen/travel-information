@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use Throwable;
 use App\Constants\ApiConstants;
+use App\Exceptions\RequestException;
 use App\Libraries\Api\WeatherApiUtils;
-use App\Exceptions\WeatherRequestException;
 
 /**
  * Class WeatherService
@@ -39,15 +38,18 @@ class WeatherService
     {
         $response = $this->weatherApiUtils->fetchCurrentWeatherByLocation($location);
 
-        if ($response[ApiConstants::SUCCESS] === false || array_key_exists(ApiConstants::ERROR, $response)) {
-            throw new WeatherRequestException($response[ApiConstants::CODE], $response[ApiConstants::DATA][ApiConstants::MESSAGE]);
+        if ($response[ApiConstants::SUCCESS] === false || 
+            array_key_exists(ApiConstants::ERROR, $response)) {
+            throw new RequestException($response[ApiConstants::CODE], 
+                $response[ApiConstants::DATA][ApiConstants::MESSAGE]
+            );
         }
 
         return $response;
     }
 
     /**
-     * fetch current weather information by location
+     * fetch 5 day forecast information by location
      *
      * @param string $location
      * @return array
@@ -56,8 +58,11 @@ class WeatherService
     {
         $response = $this->weatherApiUtils->fetch5DayForecastByLocation($location);
 
-        if ($response[ApiConstants::SUCCESS] === false || array_key_exists(ApiConstants::ERROR, $response)) {
-            throw new WeatherRequestException($response[ApiConstants::CODE], $response[ApiConstants::DATA][ApiConstants::MESSAGE]);
+        if ($response[ApiConstants::SUCCESS] === false || 
+            array_key_exists(ApiConstants::ERROR, $response)) {
+            throw new RequestException($response[ApiConstants::CODE], 
+                $response[ApiConstants::DATA][ApiConstants::MESSAGE]
+            );
         }
 
         return $response;

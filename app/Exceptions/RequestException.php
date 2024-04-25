@@ -5,14 +5,14 @@ namespace App\Exceptions;
 use Exception;
 
 /** 
- * Class WeatherRequestException
+ * Class RequestException
  * @Author: Alvin Dela Cruz <delacruzalvinstaana@gmail.com>? 
  * @Date: 2024-04-23
  */
-class WeatherRequestException extends Exception
+class RequestException extends Exception
 {
     /**
-     * WeatherRequestException constructor
+     * RequestException constructor
      *
      * @param string $message
      * @param integer $code
