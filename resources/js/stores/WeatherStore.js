@@ -24,7 +24,6 @@ export const useWeatherStore = defineStore('WeatherStore', {
     },
     actions: {
         async fetchCurrentWeather() {
-            console.log(this.currentLocation);
             await axios.get('/api/weather/' + this.currentLocation)
                     .then(response => {
                         let weatherData = response.data['data'];

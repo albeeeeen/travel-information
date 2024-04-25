@@ -18,9 +18,6 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/">Destinations</router-link>
-          </li>
         </ul>
       </div>
     </div>

@@ -3,10 +3,16 @@
   <div class="featured-destinations">
     <h2>Featured Destinations</h2>
     <div class="destination-images">
-      <a v-for="destination in destinations" :key="destination.name" :href="'/destinations/' + destination.link" class="destination">
-        <img :src="destination.image" :alt="destination.name">
-        <h3>{{ destination.name }}</h3>
-      </a>
+      <ul class="destination-list">
+        <li v-for="destination in destinations" :key="destination.name" class="destination">
+          <div class="destination-info">
+            <router-link :to="'/destinations?loc=' + destination.name">
+              <img :src="destination.image" :alt="destination.name">
+              <p class="destination-name"> {{ destination.name }} </p>
+            </router-link>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -34,27 +40,45 @@ export default {
   margin-top: 50px;
   text-align: center;
 }
+
 .featured-destinations h2 {
   font-size: 2rem;
   margin-bottom: 20px;
 }
+
 .destination-images {
+  display: flex;
+  justify-content: center;
+}
+
+.destination-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0;
+  list-style: none;
 }
+
 .destination {
   margin: 0 10px;
 }
-.destination img {
+
+.destination-info {
+  text-align: center;
+}
+
+.destination-info img {
   width: 150px;
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
 }
-.destination h3 {
-  margin-top: 10px;
-  font-size: 1.2rem;
+
+.destination-name {
+  display: block;
+  margin-top: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 @media (max-width: 767px) {
@@ -63,6 +87,17 @@ export default {
   }
   .featured-destinations h2 {
     font-size: 1.5rem;
+  }
+  .destination {
+    margin: 5px;
+  }
+  .destination-info img {
+    width: 100px;
+    height: 100px;
+  }
+  .destination-name {
+    font-size: .8rem;
+    font-weight: bold;
   }
 }
 

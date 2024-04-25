@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\WeatherService;
 use Illuminate\Http\JsonResponse;
+use App\Exceptions\RequestException;
 use App\Http\Controllers\BaseController;
-use App\Exceptions\WeatherRequestException;
 
 /**
  * Class WeatherController
@@ -41,10 +41,11 @@ class WeatherController extends BaseController
     {
         try {
 
-            $weather = $this->weatherService->fetchCurrentWeatherByLocation($location);
+            $weather = $this->weatherService
+                ->fetchCurrentWeatherByLocation($location);
             return response()->json($weather);
 
-        } catch (WeatherRequestException $exception) {
+        } catch (RequestException $exception) {
             return $this->sendError($exception->getMessage(), 500);
         }
     }
@@ -59,10 +60,11 @@ class WeatherController extends BaseController
     {
         try {
 
-            $weather = $this->weatherService->fetch5DayForecastByLocation($location);
+            $weather = $this->weatherService
+                ->fetch5DayForecastByLocation($location);
             return response()->json($weather);
 
-        } catch (WeatherRequestException $exception) {
+        } catch (RequestException $exception) {
             return $this->sendError($exception->getMessage(), 500);
         }
     }

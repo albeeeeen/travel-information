@@ -5,14 +5,14 @@ namespace App\Libraries\Api;
 use App\Constants\ApiConstants;
 
 /** 
- * Class CustomerApiUtils
+ * Class WeatherApiUtils
  * @Author: Alvin Dela Cruz <delacruzalvinstaana@gmail.com> 
  * @Date: 2024-04-23 
  */
 class WeatherApiUtils extends BaseApiUtils
 {
     /**
-     * CustomerApiUtils constructor
+     * WeatherApiUtils constructor
      */
     public function __construct()
     {
