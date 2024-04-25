@@ -32,16 +32,16 @@
       <div class="details">
         <!-- Location Name and Image -->
         <div class="location-name">
-          <span>{{ this.getDestinationName(useDestination.placeDetailData.formatted ?? useDestination.placeDetailData.name) }}</span>
+          <span>{{ this.getDestinationName((useDestination.placeDetailData?.formatted || useDestination.placeDetailData?.name) ?? '') }}</span>
           <img v-if="useDestination.placeDetailData?.wiki_and_media?.image" :src="useDestination.placeDetailData.wiki_and_media.image" alt="Location Image" />
         </div>
         <!-- Address -->
         <div class="address">
-          <strong>Address:</strong> {{ this.getDestinationAddress(useDestination.placeDetailData.formatted ?? useDestination.placeDetailData.address_line2 ?? 'N/A') }}
+          <strong>Address:</strong> {{ this.getDestinationAddress((useDestination.placeDetailData?.formatted || useDestination.placeDetailData?.address_line2) ?? 'N/A') }}
         </div>
         <!-- Description -->
         <div class="description">
-          <strong>Description:</strong> {{ useDestination.placeDetailData.description ?? 'N/A' }}
+          <strong>Description:</strong> {{ useDestination.placeDetailData?.description ?? 'N/A' }}
         </div>
         <!-- Opening Hours -->
         <div class="opening-hours" v-if="useDestination.placeDetailData?.opening_hours">
@@ -52,7 +52,7 @@
           <strong>Contact:</strong> {{ useDestination.placeDetailData.contact.phone ?? 'N/A' }}
         </div>
         <!-- Fee -->
-        <div class="amenities" v-if="useDestination.placeDetailData.datasource.raw?.fee === 'yes'">
+        <div class="amenities" v-if="useDestination.placeDetailData?.datasource?.raw?.fee === 'yes'">
           <strong>Fee:</strong>
           <span class="check-icon">&#10004;</span>
         </div>
